@@ -151,6 +151,7 @@ void digitalClockDisplay() {
 
   DateTime now = RTC.now(); // Obtiene la fecha y hora del RTC
 
+  /*
   Serial.print(now.year(), DEC); // Año
   Serial.print('/');
   Serial.print(now.month(), DEC); // Mes
@@ -163,7 +164,7 @@ void digitalClockDisplay() {
   Serial.print(':');
   Serial.print(now.second(), DEC); // Segundos
   Serial.println();
-
+  */
 
   myFile = SD.open("test.txt", FILE_WRITE);
   // if the file opened okay, write to it:
@@ -176,7 +177,7 @@ void digitalClockDisplay() {
 
     // close the file:
     myFile.close();
-    Serial.println("done.");
+    // Serial.println("done.");
   } else {
     // if the file didn't open, print an error:
     Serial.println("error opening test.txt");
