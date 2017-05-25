@@ -48,23 +48,21 @@ void imprimirEnOled() {
 */
 void imprimirDateTime() {
 
-  // esto solo funciona una vez, no se porque
-  //  char str[20];
-  //  sprintf(str, "%i/%i/%i ::: %i:%i:%i", now.year(), now.month(), now.day(), now.hour(), now.minute(), now.second());
-  //  Serial.println(str);
+  snprintf(str, 20, "%4i/%02i/%02i %02i:%02i:%02i", now.year(), now.month(), now.day(), now.hour(), now.minute(), now.second());
+  Serial.println(str);
 
-  Serial.print(now.year(), DEC);    // Año
-  Serial.print('/');
-  Serial.print(now.month(), DEC);   // Mes
-  Serial.print('/');
-  Serial.print(now.day(), DEC);     // Dia
-  Serial.print(' ');
-  Serial.print(now.hour(), DEC);    // Horas
-  Serial.print(':');
-  Serial.print(now.minute(), DEC);  // Minutos
-  Serial.print(':');
-  Serial.print(now.second(), DEC);  // Segundos
-  Serial.println();
+  //  Serial.print(now.year(), DEC);    // Año
+  //  Serial.print('/');
+  //  Serial.print(now.month(), DEC);   // Mes
+  //  Serial.print('/');
+  //  Serial.print(now.day(), DEC);     // Dia
+  //  Serial.print(' ');
+  //  Serial.print(now.hour(), DEC);    // Horas
+  //  Serial.print(':');
+  //  Serial.print(now.minute(), DEC);  // Minutos
+  //  Serial.print(':');
+  //  Serial.print(now.second(), DEC);  // Segundos
+  //  Serial.println();
 
 }
 
@@ -74,22 +72,11 @@ void imprimirDisplay() {
   // text display tests
   display.setTextSize(1);
   display.setCursor(0, 0);
-  display.print(now.year(), DEC); // Año
-  display.print('/');
-  display.print(now.month(), DEC); // Mes
-  display.print('/');
-  display.println(now.day(), DEC); // Dia
-  // display.setTextSize(2);
-  display.setTextSize(1);
-  display.print(now.hour(), DEC); // Horas
-  display.print(':');
-  display.print(now.minute(), DEC); // Minutos
-  display.print(':');
-  display.println(now.second(), DEC); // Segundos
+  snprintf(str, 20, "%4i/%02i/%02i %02i:%02i:%02i", now.year(), now.month(), now.day(), now.hour(), now.minute(), now.second());
+  display.println(str);
 
-  display.setTextSize(1);
-  display.println("jajajaja");
-  c += 1;
+  display.setTextSize(2);
+  display.setCursor(10, 10);
   display.print(c);
   display.display();
 }
@@ -107,5 +94,21 @@ void grabarFecha() {
   } else {
     Serial.println("error abriendo test.txt");
   }
+}
+
+
+void parsearOrden(char b) {
+  
+  if (b == '.' or cIncoming == BUFFER_SIZE) {
+    char *p = inComing;
+    snprintf(str, BUFFER_SIZE+1, "%s", p);
+    Serial.println(str);
+
+    memset(inComing, '\0', sizeof(char)*BUFFER_SIZE);
+    cIncoming = 0;
+    if (b=='.') return;
+  } 
+  inComing[cIncoming++] = b;
+  
 }
 
